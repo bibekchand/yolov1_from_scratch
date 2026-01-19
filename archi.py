@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+# architecture
 
 
 class MyCNN(nn.Module):
@@ -84,11 +85,13 @@ class MyCNN(nn.Module):
         return x
 
 
-test_tensor = torch.randn(
-    [16, 3, 448, 448], dtype=torch.float, device='cuda')
-print(test_tensor)
-test_model = MyCNN()
-test_model.cuda()
-y = test_model(test_tensor)
-print(y.shape)
-print(y)
+#test_tensor = torch.randn(
+#    [16, 3, 448, 448], dtype=torch.float, device='mps')
+#print(test_tensor)
+#test_model = MyCNN()
+#test_model.to("mps")
+#y = test_model(test_tensor)
+#print(y.shape)
+#print(y)
+#learning_rate = 0.01
+#epoch = 10
