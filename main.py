@@ -1,8 +1,8 @@
 from archi import MyCNN
+from giou import giou
 import torch
 from torch.utils.data import Dataset, DataLoader
-model = MyCNN()
-optimizer = torch.optim.SGD(model.parameters(), lr=0.1)
+model = MyCNN(S=7, B=2, C=10)
 
 
 class CustomDataset(Dataset):
@@ -20,8 +20,8 @@ class CustomDataset(Dataset):
 epochs = 10
 optimizer = torch.optim.SGD(model.parameters(), lr=0.1)
 x_test_tensor = torch.randn(
-    [16, 3, 448, 448], dtype=torch.float, device='mps')
-y_test_tensor = torch.randn([16, 7, 7, 30], dtype=torch.float, device='mps')
+    [16, 3, 448, 448], dtype=torch.float)
+y_test_tensor = torch.randn([16, 7, 7, 20], dtype=torch.float)
 dataset = CustomDataset(x_test_tensor, y_test_tensor)
 dataloader = DataLoader(dataset, batch_size=4, shuffle=True)
 
@@ -29,5 +29,12 @@ dataloader = DataLoader(dataset, batch_size=4, shuffle=True)
 def train():
     for epoch in range(epochs):
         for batch_features, batch_labels in dataloader:
-            y_pred = model(x_test_tensor)
-            loss = loss_function(y_pred, )
+            y_pred = model(batch_features)
+            print(y_pred.shape)
+            loss = giou(y_pred, batch_labels, True)
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+
+    print(epoch, loss.item())
+train()
