@@ -37,4 +37,3 @@ def train():
             optimizer.step()
 
     print(epoch, loss.item())
-train()
