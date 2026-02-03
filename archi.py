@@ -105,12 +105,3 @@ class MyCNN(nn.Module):
         x = torch.reshape(
             x, (x.shape[0], self.S, self.S,  (5 * self.B + self.C)))
         return x
-
-
-test_tensor = torch.randn([16, 3, 448, 448], dtype=torch.float, device='mps')
-test_model = MyCNN(S=7, B=2, C=10)
-test_model.to("mps")
-y = test_model(test_tensor)
-print(y.shape)
-learning_rate = 0.01
-epoch = 10
